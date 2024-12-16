@@ -1,6 +1,6 @@
 argocd staging:
   variables:
-    S_TG_BOT_TOKEN: 7343501207:AAFRXuFq8xXwP6FiIyTIESuuVwpKj10ts_w
+    S_TG_BOT_TOKEN: 7368958284:AAGvu8h2UogGfYATn6IP_YJuI-zGam6VstI
 include:
   - remote: https://devops-pipeline-manager-production.trendsurfers.ru/manifest.yml?sources=/ci/global/stages&.yml
   - remote: https://devops-pipeline-manager-production.trendsurfers.ru/manifest.yml?sources=/ci/jobs/build/kaniko&.yml
@@ -10,7 +10,6 @@ include:
 variables:
   DEPLOYMENT_LOAD_ENV_SECRETS: token
   DEPLOY_FROM: .k8s
-  HTTP_DOMAIN: tma-jetlag-promo-backend.trendsurfers.ru
   HTTP_ENABLED: 'true'
   HTTP_PORT: '8000'
   HTTP_SUBDOMAIN_ON: .trendsurfers.ru
