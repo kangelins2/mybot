@@ -1,3 +1,4 @@
+import httpx
 from fastapi import APIRouter
 
 from src.endpoints.models import EmailRequest
@@ -13,3 +14,21 @@ async def save_email(email: EmailRequest):
         db.add(email_db)
         await db.commit()
     return {"status": "Ok"}
+
+    url = "https://education.yandex.ru/portal-api/form"
+    payload = {
+        "surveyId": "13720008",
+        "data": {
+            "answer_non_profile_email_51926287": ""
+        }
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    # Отправка запроса
+    response = httpx.post(url, json=payload, headers=headers)
+
+    # Проверка ответа
+    print(f"Status Code: {response.status_code}")
+    print(f"Response Body: {response.text}")
