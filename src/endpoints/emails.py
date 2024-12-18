@@ -13,13 +13,12 @@ async def save_email(email: EmailRequest):
         email_db = Email(email=email.email)
         db.add(email_db)
         await db.commit()
-    return {"status": "Ok"}
 
     url = "https://education.yandex.ru/portal-api/form"
     payload = {
         "surveyId": "13720008",
         "data": {
-            "answer_non_profile_email_51926287": ""
+            "answer_non_profile_email_51926287": email.email
         }
     }
     headers = {
@@ -32,3 +31,5 @@ async def save_email(email: EmailRequest):
     # Проверка ответа
     print(f"Status Code: {response.status_code}")
     print(f"Response Body: {response.text}")
+
+    return {"status": "Ok"}
