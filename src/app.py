@@ -7,6 +7,7 @@ import anyio
 import uvicorn
 from aiogram import Dispatcher, Bot
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.core.credentails import settings
 from src.db.database import engine
@@ -16,9 +17,27 @@ from src.endpoints.emails import router as emails_router
 dp = Dispatcher()
 app = FastAPI()
 
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 dp.include_router(router)
 
 app.include_router(emails_router)
+
+
 
 async def start_server(tg: TaskGroup, server: Callable[[], Awaitable]):
     await server()
