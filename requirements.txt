@@ -11,7 +11,9 @@ certifi==2024.8.30
 click==8.1.7
 colorama==0.4.6
 coloredlogs==15.0.1
+dnspython==2.7.0
 dp==1.0
+email_validator==2.2.0
 executor==23.2
 fastapi==0.112.2
 fasteners==0.19
