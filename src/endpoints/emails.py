@@ -18,7 +18,7 @@ async def save_email(email: EmailRequest):
     payload = {
         "surveyId": "13720008",
         "data": {
-            "answer_non_profile_email_51926287": email.email
+            "answer_non_profile_email_51926287": str(email.email)
         }
     }
     headers = {
@@ -26,7 +26,8 @@ async def save_email(email: EmailRequest):
     }
 
     # Отправка запроса
-    response = httpx.post(url, json=payload, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json=payload, headers=headers)
 
     # Проверка ответа
     print(f"Status Code: {response.status_code}")
