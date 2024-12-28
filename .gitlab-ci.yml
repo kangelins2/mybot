@@ -12,3 +12,4 @@ variables:
   HTTP_SUBDOMAIN_ON: .trendsurfers.ru
   MAINTAINERS: vapvapapvpva@yandex.ru
   POSTGRES_ENABLED: 'true'
+  REDIS_ENABLED: 'true'
