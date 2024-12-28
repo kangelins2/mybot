@@ -1,6 +1,9 @@
+import time
+
 import httpx
 from fastapi import APIRouter
 
+from src.core._redis import redis
 from src.endpoints.models import EmailRequest
 from src.db.database import session_factory
 from src.db.models import Email
@@ -30,6 +33,10 @@ async def save_email(email: EmailRequest):
         response = await client.post(url, json=payload, headers=headers)
 
     # Проверка ответа
+    if response.status_code != 200:
+        await redis.zadd("email_errors", {str(email.email): time.time()})
+        print(f"Headers: {response.headers}")
+        print(f"Email: {email.email}")
     print(f"Status Code: {response.status_code}")
     print(f"Response Body: {response.text}")
 

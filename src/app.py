@@ -14,6 +14,8 @@ from src.db.database import engine
 from src.db.models import Base
 from src.routers.start import router
 from src.endpoints.emails import router as emails_router
+from src.worker import worker_process_mails
+
 dp = Dispatcher()
 app = FastAPI()
 
@@ -43,6 +45,11 @@ async def start_bot(tg: TaskGroup):
     tg.cancel_scope.cancel()
 
 
+async def start_worker(tg: TaskGroup):
+    await worker_process_mails()
+    tg.cancel_scope.cancel()
+
+
 async def main():
     config = (uvicorn.Config(
         "src.app:app", "0.0.0.0", log_level=4, workers=1, reload=False,
@@ -55,6 +62,7 @@ async def main():
     async with anyio.create_task_group() as tg:
         tg.start_soon(start_server, tg, server.serve)
         tg.start_soon(start_bot, tg)
+        tg.start_soon(start_worker, tg)
         # tg.start_soon(run_migration)
 
 
